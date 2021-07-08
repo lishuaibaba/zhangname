@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./one/jquery-2.1.1.min.js">
+    </script>
+
+    <script src="./one/bootstrap-5.0.1-dist/bootstrap-5.0.1-dist/js/bootstrap.js"> </script>
+
+    <link rel="stylesheet" type="text/css" href="./one/bootstrap-5.0.1-dist/bootstrap-5.0.1-dist/css/bootstrap.css">
+    <style>
+        .mask{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            position: absolute;
+            position: fixed;
+        }
+        .clearfix{
+            display: block;
+            
+        }
+    </style>
+</head>
+</head>
+
+<body>
+    <table class="table table-hover">
+        <tr class="active">
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+        </tr>
+        <tr>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+        </tr>
+        <tr>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+        </tr>
+        <tr>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+        </tr>
+        <tr>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+            <td>1123</td>
+        </tr>
+    </table>
+    <form action="2.html">
+        <input type="text" name="user">
+        <input type="password" name="pass">
+        <!-- <button class="btn btn-default" type="submit">提交</button> -->
+    </form>
+
+
+    <div class="box">
+        <p>item1</p>
+    </div>
+    <p>item2</p>
+    <button> click </button>
+    <script>
+        $('.btn').click(function(e){
+            console.log($(e.target).index());
+        })
+
+        $('button').click(function(){
+            var p = $(this).prev().remove()
+            
+            $('.box').append(p);
+        })
+    </script>
+</body>
+
+</html>

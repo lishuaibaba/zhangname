@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>手机号 <input type="text"></div>
+    <div>短信： <input type="text"></div>
+    <div><button>发送短信</button></div>
+    <script src="./one/jquery-2.1.1.min.js"></script>
+    <script>
+        var appid = 'wxb950d1daeb29d918';
+        var redirect_uri = 'http://127.0.0.1:5500/demo/demoz.html';
+        $.ajax({
+            url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
+            method: "get",
+            success() {
+                var query = window.location.search.substring(1);
+                var oldarray = query.split("&");
+                var obj = {}
+                for (var i = 0; i < oldarray.length; i++) {
+                    var arritem = oldarray[i]
+                    var item = arritem.split('=')
+                    obj[item[0]] = item[1]
+                }
+
+                if (1) {
+                    console.log(obj.code);
+                    fun(obj.code, '获取到code然后调用fun');
+                    console.log('1');
+                }
+            }
+        })
+
+
+
+        function fun(code) {
+
+            var appid = 'wxb950d1daeb29d918';
+            var appsecret = '0c00184882c2a2deb1d3b74e578614e7'
+
+            var prm = new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=' + appid + '&secret=' + appsecret + '&code=' + code + '&grant_type=authorization_code',
+                    method: 'get',
+                    success(res) {
+                        var resObj = JSON.parse(res)
+                        resolve(resObj)
+                        console.log('2');
+
+                    }
+                })
+            }).then((res) => {
+                console.log(res.access_token, 'zzz');
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "https://api.weixin.qq.com/sns/userinfo?access_token=" + res.access_token + "&openid=" + res.openid + "&lang=zh_CN",
+                        method: "get",
+                        success(res) {
+                            resolve(res)
+                            console.log('3');
+                        }
+                    })
+                })
+            }).then((res) => {
+                var resUserInfo = JSON.parse(res);
+                console.log(resUserInfo);
+            })
+
+        }
+
+        // var resObj = JSON.parse(res)
+        // console.log(resObj);
+        // $.ajax({
+        //     url: "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + resObj.access_token + "&openid=" + resObj.openid + "&lang=zh_CN",
+        //     method: "get",
+        //     success(res) {
+        //         console.log(res, '用openid获取到的用户信息');
+        //     }
+        // })
+
+        //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb950d1daeb29d918&redirect_uri=http://127.0.0.1:5500/demo/demoz.html&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect
+    </script>
+</body>
+
+</html>
